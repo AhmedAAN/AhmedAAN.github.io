@@ -1,0 +1,82 @@
+body {  
+    margin: 0px;
+}
+.main {
+    color: rgba(0, 0, 0, .5);
+    letter-spacing: 10px;
+    mix-blend-mode: difference;
+}
+.container {
+    height: 100vh;
+    background: linear-gradient(to bottom right, #ffffff , #272727);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container>div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translate(0, -50px);
+}
+.container>div>* {
+    margin-top: 20px;
+}
+.color-selector-l, .color-selector-r {
+    margin: 5px;
+    inline-size: 100px;
+    block-size: 50px;
+    border-width: 1px;
+    border-color: rgba(131, 131, 131, 0.5);
+    padding: 2px 4px;
+    background-color: rgba(0, 0, 0, .3);
+    border-radius: 20px;
+}
+.color-selector-l::-webkit-color-swatch, .color-selector-r::-webkit-color-swatch {
+    border-radius: 15px;
+}
+.random {
+    border-radius: 15px;
+    border-width: 1px;
+    border-color: rgba(131, 131, 131, 0.5);
+    background-color: rgba(0, 0, 0, .3);
+    color: white;
+    padding: 6px 10px;
+    font-size: 14px;
+}
+.day-night>button {
+    margin: 5px;
+}
+.day-night>button {
+    height: 50px;
+    width: 55px;
+    border-radius: 15px;
+    border-width: 0;
+}
+.night {
+    background-color: black;
+}
+.night.active {
+    border-width: 2px;
+    border-color: aliceblue;
+}
+.day {
+    background-color: #ffffff;
+}
+.day.active {
+    border-width: 2px;
+    border-color: black;
+}
+.dark {
+    background: none;
+    background-color: rgb(26, 26, 26);
+    color: #ffffff;
+}
+
+.light {
+    background: none;
+    background-color: rgb(197, 197, 197);
+    color: #070707;
+}
