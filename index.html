@@ -1,0 +1,461 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			#localVideo,
+			.remoteVideo {
+				width: 320px;
+				height: 240px;
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<form>
+			<h1>login</h1>
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input
+					type="email"
+					class="form-control"
+					id="email"
+					name="email"
+					placeholder="Enter your email" />
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input
+					type="password"
+					class="form-control"
+					id="password"
+					name="password"
+					placeholder="Enter your password" />
+			</div>
+			<button type="submit" class="btn btn-primary">Login</button>
+		</form>
+		<button id="socket" class="btn btn-primary">socket</button>
+		<button id="getchats" class="btn btn-primary">get chats</button>
+		<div id="room-selection-container" class="centered">
+			<h1>WebRTC video conference</h1>
+			<label>Enter the number of the room you want to connect</label>
+			<input id="room-input" type="text" />
+			<button id="connect-button">CONNECT</button>
+		</div>
+		<div id="video-chat-container" class="video-position" style="display: none">
+			<video id="local-video" autoplay="autoplay" style="width: 600px"></video>
+			<video id="remote-video" autoplay="autoplay" style="width: 600px"></video>
+		</div>
+		<!-- <script>
+      //https://radwan.up.railway.app
+        const url = 'http://localhost:4000/login';
+        const data = {
+            "email": "ahmednagy@gmail.com",
+            "password": "123456789"
+        };
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+            credentials: "include"
+        })
+            .then(async response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return await response.json();
+            })
+            .then(data => {
+                console.log('Data received:', data);
+                // Process the received data here
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+
+    </script>
+    
+
+
+    <script type="importmap">
+        {
+          "imports": {
+            "socket.io-client": "https://cdn.socket.io/4.7.4/socket.io.esm.min.js"
+          }
+        }
+      </script>
+      
+      <script type="module">
+        import { io } from "socket.io-client";
+      
+        const socket = io('http://localhost:4000/', {withCredentials: true});
+
+    //      socket.emit("create chat", {
+    //      ID: "65bcf9ddc37e8906e6a68b13"
+    //    });
+      socket.on('chat created', (message) => {console.log(message)})
+
+      //socket.emit("get chats", 1, (response) => {
+      //  if (response.error) {
+      //    console.log(response.error);
+      //  }
+      //  else {
+      //    console.log(response)
+      //  }
+      //})
+      //socket.emit("message", {chatID: "65db954cdcd31c6912f0c0ec", msg: "bla"})
+      //socket.on('message', (message) => {console.log(message)})
+      socket.emit("get messages", "65db954cdcd31c6912f0c0ec", 1, 0, (response) => {
+        if (response.error) {
+          console.log(response.error);
+        }
+        else {
+          console.log(response);
+        }
+      })
+      socket.on("online", (message) => {console.log(message.userID)})
+      socket.on('notification', (message) => {console.log(message)})
+
+
+      const url2 = 'http://localhost:4000/notify';
+      const data2 = {
+            "message": {"name":  "ahmed", "url": "http://bbkbb.com"},
+            "receiverID": "663511e8b3e15785e556d3b7"
+        };
+
+setTimeout(() => {
+  fetch(url2, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data2),
+        credentials: "include"
+      })
+  
+}, "1000");
+setTimeout(() => {
+  fetch('https://radwan.up.railway.app/createRoom', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(async response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return await response.json();
+            })
+            .then(data => {
+                console.log('Data received:', data);
+                // Process the received data here
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+}, "1000");
+setTimeout(() => {
+  fetch('http://localhost:4000/createChat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"ID1": "663511e8b3e15785e556d3b7", "ID2": "65bfc46df6c9db2c749fba2e"}),
+      }).then(async response => {
+                if (!response.ok) {
+                    console.log(response.body)
+                }
+                return await response.json();
+            })
+            .then(data => {
+                console.log('Data received:', data);
+                // Process the received data here
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+}, "1000");
+      
+      </script>
+
+      -->
+
+		<script>
+			const form = document.querySelector("form");
+			form.addEventListener("submit", async (e) => {
+				e.preventDefault();
+
+				const email = form.email.value;
+				const password = form.password.value;
+				console.log(email);
+
+				try {
+					const res = await fetch("https://radwan.up.railway.app/login", {
+						method: "POST",
+						body: JSON.stringify({ email, password }),
+						headers: { "Content-type": "application/json" },
+						credentials: "include",
+					});
+					data = await res.json();
+					console.log(data);
+				} catch (err) {
+					console.log(err);
+				}
+			});
+		</script>
+
+		<script type="importmap">
+			{
+				"imports": {
+					"socket.io-client": "https://cdn.socket.io/4.7.4/socket.io.esm.min.js"
+				}
+			}
+		</script>
+
+		<script type="module">
+			import { io } from "socket.io-client";
+
+			document.getElementById("socket").onclick = function () {
+				handleSocket();
+			};
+
+			var socket = io("https://radwan.up.railway.app/", {
+				withCredentials: true,
+			});
+			function handleSocket() {
+				document.getElementById("getchats").onclick = function () {
+					getchats();
+				};
+
+				socket.emit("message", {
+					chatID: "66353076b3e15785e556d3d4",
+					msg: "bla",
+				});
+				socket.on("message", (message) => {
+					console.log(message);
+				});
+
+				socket.on("notification", (message) => {
+					console.log(message);
+				});
+
+				function getchats() {
+					const url2 = "http://localhost:4000/notify";
+					const data2 = {
+						message: { name: "ahmed", url: "http://bbkbb.com" },
+						receiverID: "663513b7b3e15785e556d3ba",
+					};
+
+					setTimeout(() => {
+						fetch(url2, {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify(data2),
+							credentials: "include",
+						});
+					}, "1000");
+				}
+			}
+			//-------------------------------------------------------
+			//--------------------------------------------------------
+
+			const roomSelectionContainer = document.getElementById(
+				"room-selection-container"
+			);
+			const roomInput = document.getElementById("room-input");
+			const connectButton = document.getElementById("connect-button");
+
+			const videoChatContainer = document.getElementById(
+				"video-chat-container"
+			);
+			const localVideoComponent = document.getElementById("local-video");
+			const remoteVideoComponent = document.getElementById("remote-video");
+
+			// Variables.
+			const mediaConstraints = {
+				audio: true,
+				video: { width: 1280, height: 720 },
+			};
+			let localStream;
+			let remoteStream;
+			let isRoomCreator;
+			let rtcPeerConnection; // Connection between the local device and the remote peer.
+			let roomId;
+
+			// Free public STUN servers provided by Google.
+			var iceServers = {
+				iceServers: [],
+			};
+			const turnServersResponse = await fetch(
+				"https://almentor.metered.live/api/v1/turn/credentials?apiKey=3e5cfc1f726919e195f3480058d9bfd78e55"
+			);
+			const turnServers = await turnServersResponse.json();
+			iceServers = iceServers.iceServers.concat(turnServers);
+			iceServers = iceServers.splice(1);
+			console.log(iceServers);
+
+			// BUTTON LISTENER ============================================================
+			connectButton.addEventListener("click", () => {
+				joinRoom(roomInput.value);
+			});
+
+			// SOCKET EVENT CALLBACKS =====================================================
+			socket.on("room_created", async () => {
+				console.log("Socket event callback: room_created");
+
+				await setLocalStream(mediaConstraints);
+				isRoomCreator = true;
+			});
+
+			socket.on("room_joined", async () => {
+				console.log("Socket event callback: room_joined");
+
+				await setLocalStream(mediaConstraints);
+				socket.emit("start_call", roomId);
+			});
+
+			socket.on("full_room", () => {
+				console.log("Socket event callback: full_room");
+
+				alert("The room is full, please try another one");
+			});
+
+			// FUNCTIONS ==================================================================
+			function joinRoom(room) {
+				if (room === "") {
+					alert("Please type a room ID");
+				} else {
+					roomId = room;
+					console.log(room);
+					socket.emit("join", room);
+					showVideoConference();
+				}
+			}
+
+			function showVideoConference() {
+				roomSelectionContainer.style = "display: none";
+				videoChatContainer.style = "display: block";
+			}
+
+			async function setLocalStream(mediaConstraints) {
+				let stream;
+				try {
+					stream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+				} catch (error) {
+					console.error("Could not get user media", error);
+				}
+
+				localStream = stream;
+				localVideoComponent.srcObject = stream;
+			}
+			//-------------------------------------------------------
+			//-------------------------------------------------------
+			socket.on("start_call", async () => {
+				console.log("Socket event callback: start_call");
+
+				if (isRoomCreator) {
+					rtcPeerConnection = new RTCPeerConnection(iceServers);
+					addLocalTracks(rtcPeerConnection);
+					rtcPeerConnection.ontrack = setRemoteStream;
+					rtcPeerConnection.onicecandidate = sendIceCandidate;
+					await createOffer(rtcPeerConnection);
+				}
+			});
+
+			socket.on("webrtc_offer", async (event) => {
+				console.log("Socket event callback: webrtc_offer");
+
+				if (!isRoomCreator) {
+					rtcPeerConnection = new RTCPeerConnection(iceServers);
+					addLocalTracks(rtcPeerConnection);
+					rtcPeerConnection.ontrack = setRemoteStream;
+					rtcPeerConnection.onicecandidate = sendIceCandidate;
+					rtcPeerConnection.setRemoteDescription(
+						new RTCSessionDescription(event)
+					);
+					await createAnswer(rtcPeerConnection);
+				}
+			});
+
+			socket.on("webrtc_answer", (event) => {
+				console.log("Socket event callback: webrtc_answer");
+
+				rtcPeerConnection.setRemoteDescription(
+					new RTCSessionDescription(event)
+				);
+			});
+
+			socket.on("webrtc_ice_candidate", (event) => {
+				console.log("Socket event callback: webrtc_ice_candidate");
+
+				// ICE candidate configuration.
+				var candidate = new RTCIceCandidate({
+					sdpMLineIndex: event.label,
+					candidate: event.candidate,
+				});
+				rtcPeerConnection.addIceCandidate(candidate);
+			});
+
+			// FUNCTIONS ==================================================================
+			function addLocalTracks(rtcPeerConnection) {
+				localStream.getTracks().forEach((track) => {
+					rtcPeerConnection.addTrack(track, localStream);
+				});
+			}
+
+			async function createOffer(rtcPeerConnection) {
+				let sessionDescription;
+				try {
+					sessionDescription = await rtcPeerConnection.createOffer();
+					rtcPeerConnection.setLocalDescription(sessionDescription);
+				} catch (error) {
+					console.error(error);
+				}
+				console.log(sessionDescription);
+
+				socket.emit("webrtc_offer", {
+					type: "webrtc_offer",
+					sdp: sessionDescription,
+					roomID: roomId,
+				});
+			}
+
+			async function createAnswer(rtcPeerConnection) {
+				let sessionDescription;
+				try {
+					sessionDescription = await rtcPeerConnection.createAnswer();
+					rtcPeerConnection.setLocalDescription(sessionDescription);
+				} catch (error) {
+					console.error(error);
+				}
+
+				socket.emit("webrtc_answer", {
+					type: "webrtc_answer",
+					sdp: sessionDescription,
+					roomID: roomId,
+				});
+			}
+
+			function setRemoteStream(event) {
+				remoteVideoComponent.srcObject = event.streams[0];
+				remoteStream = event.stream;
+			}
+
+			function sendIceCandidate(event) {
+				if (event.candidate) {
+					socket.emit("webrtc_ice_candidate", {
+						roomID: roomId,
+						label: event.candidate.sdpMLineIndex,
+						candidate: event.candidate.candidate,
+					});
+				}
+			}
+		</script>
+	</body>
+</html>
