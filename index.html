@@ -443,7 +443,7 @@ setTimeout(() => {
 			}
 
 			function setRemoteStream(event) {
-				console.log(event)
+				console.log(event.streams[0])
 				remoteVideoComponent.srcObject = event.streams[0];
 				remoteStream = event.stream;
 			}
