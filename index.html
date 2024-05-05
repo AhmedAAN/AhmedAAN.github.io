@@ -292,15 +292,36 @@ setTimeout(() => {
 
 			// Free public STUN servers provided by Google.
 			var iceServers = {
-				iceServers: [],
+				iceServers: [
+					{ urls: 'stun:stun.l.google.com:19302' },
+					{ urls: 'stun:stun1.l.google.com:19302' },
+					{ urls: 'stun:stun2.l.google.com:19302' },
+					{ urls: 'stun:stun3.l.google.com:19302' },
+					{ urls: 'stun:stun4.l.google.com:19302' },
+					{ urls: 'stun:stun.relay.metered.ca:80' },
+					{ 
+						urls: 'turn:global.relay.metered.ca:80',
+						username: '90b3064af83498636cc614a1',
+						credential: 'soPV9UVdMP/szrXN'
+					},
+					{
+						urls: 'turn:global.relay.metered.ca:80?transport=tcp',
+						username: '90b3064af83498636cc614a1',
+						credential: 'soPV9UVdMP/szrXN'
+					},
+					{
+						urls: 'turn:global.relay.metered.ca:443',
+						username: '90b3064af83498636cc614a1',
+						credential: 'soPV9UVdMP/szrXN'
+					},
+					{
+						urls: 'turns:global.relay.metered.ca:443?transport=tcp',
+						username: '90b3064af83498636cc614a1',
+						credential: 'soPV9UVdMP/szrXN'
+					}
+				],
 			};
-			const turnServersResponse = await fetch(
-				"https://almentor.metered.live/api/v1/turn/credentials?apiKey=3e5cfc1f726919e195f3480058d9bfd78e55"
-			);
-			const turnServers = await turnServersResponse.json();
-			iceServers = iceServers.iceServers.concat(turnServers);
-			iceServers = iceServers.splice(1);
-			console.log(iceServers);
+
 
 			// BUTTON LISTENER ============================================================
 			connectButton.addEventListener("click", () => {
@@ -377,6 +398,7 @@ setTimeout(() => {
 					rtcPeerConnection = new RTCPeerConnection(iceServers);
 					addLocalTracks(rtcPeerConnection);
 					rtcPeerConnection.ontrack = setRemoteStream;
+					console.log(remoteVideoComponent.srcObject)
 					rtcPeerConnection.onicecandidate = sendIceCandidate;
 					rtcPeerConnection.setRemoteDescription(
 						new RTCSessionDescription(event)
@@ -445,8 +467,9 @@ setTimeout(() => {
 			}
 
 			function setRemoteStream(event) {
-				console.log(event.streams[0])
 				remoteVideoComponent.srcObject = event.streams[0];
+				
+				console.log(remoteVideoComponent.srcObject)
 				remoteStream = event.stream;
 			}
 
