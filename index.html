@@ -522,14 +522,14 @@ setTimeout(() => {
     			}
 			}
 
-			function toogleAudio() {
-				localStream.getAudioTracks.forEach(track => {
+			function toggleAudio() {
+				localStream.getAudioTracks().forEach(track => {
 					track.enabled = !track.enabled;
 				})
 			}
 
 			function toggleVideo() {
-				localStream.getVideoTracks.forEach(track => {
+				localStream.getVideoTracks().forEach(track => {
 					track.enabled = !track.enabled;
 				})
 			}
