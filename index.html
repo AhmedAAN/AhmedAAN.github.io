@@ -496,7 +496,7 @@ setTimeout(() => {
 			function setRemoteStream(event) {
 				remoteVideoComponent.srcObject = event.streams[0];
 				
-				console.log(remoteVideoComponent.srcObject)
+				console.log(event.streams[0].getTracks())
 				remoteStream = event.stream;
 			}
 
