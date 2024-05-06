@@ -565,7 +565,7 @@ setTimeout(() => {
 			function updatePeerConnection() {
     			// Assume localPeerConnection is your RTCPeerConnection instance
     			// You may need to remove and add tracks based on your use case
-    			localPeerConnection.getSenders().forEach(sender => {
+    			rtcPeerConnection.getSenders().forEach(sender => {
         			localStream.getTracks().forEach(track => {
             			if (track.kind === sender.track.kind) {
                 			sender.replaceTrack(track);
