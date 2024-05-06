@@ -475,7 +475,9 @@ setTimeout(() => {
 				remoteStream = event.stream;
 			}
 
+			let selectedIceCandidate = null;
 			function sendIceCandidate(event) {
+				selectedIceCandidate = event.candidate;
 				if (event.candidate) {
 					socket.emit("webrtc_ice_candidate", {
 						roomID: roomId,
@@ -485,7 +487,7 @@ setTimeout(() => {
 				}
 			}
 
-			let selectedIceCandidate = null;
+			
 			function printActiveConnection(event) {
 				console.log("ICE connection state changed to:", rtcPeerConnection.iceConnectionState);
     
