@@ -48,6 +48,9 @@
 		<div id="video-chat-container" class="video-position" style="display: none">
 			<video id="local-video" autoplay="autoplay" style="width: 600px"></video>
 			<video id="remote-video" autoplay="autoplay" style="width: 600px"></video>
+			<button id="mute">Mute</button>
+			<button id="video">Turn off video</button>
+			<button id="toggleStreamButton">Toggle Stream</button>
 		</div>
 		<!-- <script>
       //https://radwan.up.railway.app
@@ -224,6 +227,25 @@ setTimeout(() => {
 			document.getElementById("socket").onclick = function () {
 				handleSocket();
 			};
+
+			document.getElementById("mute").onclick = function () {
+				toogleAudio();
+			}
+
+			document.getElementById("video").onclick = function () {
+				toogleVideo();
+			}
+
+			let isScreenSharing = false;
+
+			document.getElementById('toggleStreamButton').addEventListener('click', async () => {
+    			isScreenSharing = !isScreenSharing;
+    			if (isScreenSharing) {
+        			await setLocalScreenShare();
+    			} else {
+        			await setLocalCamera();
+    			}
+			});
 
 			var socket = io("https://radwan.up.railway.app/", {
 				withCredentials: true,
@@ -498,6 +520,52 @@ setTimeout(() => {
     			if (rtcPeerConnection.iceConnectionState === "connected") {
         			console.log("Selected ICE candidate:", selectedIceCandidate);
     			}
+			}
+
+			function toogleAudio() {
+				localStream.getAudioTracks.forEach(track => {
+					track.enabled = !track.enabled;
+				})
+			}
+
+			function toggleVideo() {
+				localStream.getVideoTracks.forEach(track => {
+					track.enabled = !track.enabled;
+				})
+			}
+
+			async function setLocalCamera() {
+    			let stream;
+   				 try {
+        			stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    			} catch (error) {
+        			console.error("Could not get user media", error);
+    			}
+
+    			updateLocalStream(stream);
+			}
+
+			async function setLocalScreenShare() {
+    			let stream;
+    			try {
+        			stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+    			} catch (error) {
+        			console.error("Could not get screen sharing media", error);
+    			}
+
+    			updateLocalStream(stream);
+			}
+
+			function updatePeerConnection() {
+    			// Assume localPeerConnection is your RTCPeerConnection instance
+    			// You may need to remove and add tracks based on your use case
+    			localPeerConnection.getSenders().forEach(sender => {
+        			localStream.getTracks().forEach(track => {
+            			if (track.kind === sender.track.kind) {
+                			sender.replaceTrack(track);
+            			}
+        			});
+    			});
 			}
 		</script>
 	</body>
