@@ -394,7 +394,7 @@ setTimeout(() => {
 				}
 			});
 
-			socket.on("webrtc_offer", async (event) => {
+			socket.on("webrtc_offer", async (offer) => {
 				console.log("Socket event callback: webrtc_offer");
 
 				if (!isRoomCreator) {
@@ -405,7 +405,7 @@ setTimeout(() => {
 					rtcPeerConnection.onicecandidate = sendIceCandidate;
 					rtcPeerConnection.oniceconnectionstatechange = printActiveConnection;
 					rtcPeerConnection.setRemoteDescription(
-						new RTCSessionDescription(event)
+						offer
 					);
 					await createAnswer(rtcPeerConnection);
 				}
