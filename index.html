@@ -387,6 +387,7 @@ setTimeout(() => {
 					addLocalTracks(rtcPeerConnection);
 					rtcPeerConnection.ontrack = setRemoteStream;
 					rtcPeerConnection.onicecandidate = sendIceCandidate;
+					rtcPeerConnection.oniceconnectionstatechange = printActiveConnection;
 					await createOffer(rtcPeerConnection);
 				}
 			});
@@ -400,6 +401,7 @@ setTimeout(() => {
 					rtcPeerConnection.ontrack = setRemoteStream;
 					console.log(remoteVideoComponent.srcObject)
 					rtcPeerConnection.onicecandidate = sendIceCandidate;
+					rtcPeerConnection.oniceconnectionstatechange = printActiveConnection;
 					rtcPeerConnection.setRemoteDescription(
 						new RTCSessionDescription(event)
 					);
@@ -481,6 +483,15 @@ setTimeout(() => {
 						candidate: event.candidate.candidate,
 					});
 				}
+			}
+
+			function printActiveConnection(event) {
+				console.log("ICE connection state changed to:", rtcPeerConnection.iceConnectionState);
+    
+    			// If the ICE connection state is "connected", it means a candidate was successfully used
+    			if (rtcPeerConnection.iceConnectionState === "connected") {
+        			console.log("Selected ICE candidate:", selectedIceCandidate);
+    			}
 			}
 		</script>
 	</body>
