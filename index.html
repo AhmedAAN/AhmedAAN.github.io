@@ -485,6 +485,7 @@ setTimeout(() => {
 				}
 			}
 
+			let selectedIceCandidate = null;
 			function printActiveConnection(event) {
 				console.log("ICE connection state changed to:", rtcPeerConnection.iceConnectionState);
     
