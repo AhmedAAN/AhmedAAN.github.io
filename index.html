@@ -462,6 +462,7 @@ setTimeout(() => {
 				} catch (error) {
 					console.error(error);
 				}
+				console.log(sessionDescription)
 
 				socket.emit("webrtc_answer", {
 					type: "webrtc_answer",
