@@ -46,7 +46,7 @@
 			<button id="connect-button">CONNECT</button>
 		</div>
 		<div id="video-chat-container" class="video-position" style="display: none">
-			<video id="local-video" autoplay="autoplay" style="width: 600px"></video>
+			<video id="local-video" autoplay="autoplay" style="width: 600px" muted></video>
 			<video id="remote-video" autoplay="autoplay" style="width: 600px"></video>
 			<button id="mute">Mute</button>
 			<button id="video">Turn off video</button>
@@ -496,7 +496,7 @@ setTimeout(() => {
 			function setRemoteStream(event) {
 				remoteVideoComponent.srcObject = event.streams[0];
 				
-				console.log(event.streams[0].getTracks())
+				console.log(remoteVideoComponent.srcObject)
 				remoteStream = event.stream;
 			}
 
@@ -548,13 +548,48 @@ setTimeout(() => {
 			async function setLocalScreenShare() {
     			let stream;
     			try {
-        			stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        			const systemStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+
+                    const systemAudioTrack = systemStream.getAudioTracks();
+                    const systemVideoTrack = systemStream.getVideoTracks();
+
+                    stream = new MediaStream(systemVideoTrack)
+                    const systemAudioStream = new MediaStream(systemAudioTrack);
+
+
+                    const micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+                    const combinedAudioStream = mergeAudioTracks(systemAudioStream, micStream); 
+
+                    const audioTracks = combinedAudioStream.getTracks()
+
+
+                    if (audioTracks.length > 0) {
+                        stream.addTrack(audioTracks[0]);
+                    }
+                    console.log(stream.getTracks())
     			} catch (error) {
         			console.error("Could not get screen sharing media", error);
     			}
 
     			updateLocalStream(stream);
 			}
+
+            function mergeAudioTracks(track1Stream, track2Stream) {
+                const audioContext = new AudioContext();
+                const track1 = audioContext.createMediaStreamSource(track1Stream);
+                const track2 = audioContext.createMediaStreamSource(track2Stream);
+
+                const merger = audioContext.createChannelMerger(2);
+                track1.connect(merger);
+                track2.connect(merger);
+
+                const outputStream = audioContext.createMediaStreamDestination();
+
+                merger.connect(outputStream);
+
+                return outputStream.stream;
+            }
 
 			function updateLocalStream(stream) {
     			localVideoComponent.srcObject = stream;
@@ -568,6 +603,8 @@ setTimeout(() => {
     			rtcPeerConnection.getSenders().forEach(sender => {
         			localStream.getTracks().forEach(track => {
             			if (track.kind === sender.track.kind) {
+                            console.log("track kind", track.kind)
+                            console.log("sneder trackx kind", sender.track.kind)
                 			sender.replaceTrack(track);
             			}
         			});
