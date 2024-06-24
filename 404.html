@@ -5,13 +5,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Page Not Found</title>
 		<script>
-			// This script redirects any 404 error page to index.html and preserves the URL.
-			var redirectTo = location.pathname + location.search;
-			console.log(redirectTo);
-			console.log(window.location);
-
-			window.location.replace("/" + redirectTo);
-			console.log(window.location);
+			// Redirect to the index.html for React Router to handle the routing
+			var redirectTo = window.location.pathname + window.location.search;
+			window.location.replace(
+				"/index.html?redirect=" + encodeURIComponent(redirectTo)
+			);
 		</script>
 	</head>
 	<body></body>
