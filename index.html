@@ -9,6 +9,15 @@
 		<link rel="stylesheet" crossorigin href="/assets/index-DUaTaDhP.css">
 	</head>
 	<body>
-		<div id="root"></div>
+		<div id="root"></div>
+		<script type="text/javascript">
+			(function () {
+				var urlParams = new URLSearchParams(window.location.search);
+				var redirectTo = urlParams.get("redirect");
+				if (redirectTo) {
+					window.history.replaceState(null, "", redirectTo);
+				}
+			})();
+		</script>
 	</body>
 </html>
