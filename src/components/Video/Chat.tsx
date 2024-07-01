@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { useEffect, useRef, useState } from "react";
-import Message from "../Chat/Message.tsx";
+import Message from "../Chat/Message";
 import { socket } from "../../socket";
 
 const Chat = ({ Sheet, roomId }) => {

@@ -62,10 +62,7 @@ const ChatContactsNormal = () => {
 					</div>
 				</div>
 
-				<SearchChats
-					searchInputValue={searchInputValue}
-					setSearchInputValue={setSearchInputValue}
-				/>
+				<SearchChats searchInputValue={searchInputValue} />
 				{!searchInputValue && <ChatList />}
 			</div>
 			<div className="group w-3 bg-chat flex justify-center items-center">

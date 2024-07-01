@@ -6,6 +6,7 @@ export const mentors = [
     rate: "4.5",
     exp: "4",
     track: "Frontend",
+    _id: "1"
   },
   {
     name: "Menna Ahmed",
@@ -14,6 +15,7 @@ export const mentors = [
     rate: "4.5",
     exp: "4",
     track: "UI/UX",
+    _id:"2"
   },
   {
     name: "Mahmoud Radwan",
@@ -22,6 +24,7 @@ export const mentors = [
     rate: "4.5",
     exp: "5",
     track: "Backend",
+    _id:"3"
   },
   {
     name: "Yomna Hegazy",
@@ -30,6 +33,7 @@ export const mentors = [
     rate: "4.5",
     exp: "3",
     track: "UI/UX",
+    _id:"4"
   },
   {
     name: "Aya Etman",
@@ -38,6 +42,7 @@ export const mentors = [
     rate: "4.5",
     exp: "7",
     track: "Frontend",
+    _id:"5"
   },
   {
     name: "Ahmed Hassan",
@@ -46,6 +51,7 @@ export const mentors = [
     rate: "4.5",
     exp: "4",
     track: "UI/UX",
+    _id:"6"
   },
   {
     name: "Ahmed Nagy",
@@ -54,6 +60,7 @@ export const mentors = [
     rate: "4.5",
     exp: "6",
     track: "Backend",
+    _id:"7"
   },
   {
     name: "Abdo Kamar",
@@ -62,5 +69,6 @@ export const mentors = [
     rate: "4.5",
     exp: "3",
     track: "UI/UX",
+    _id:"8"
   },
 ];

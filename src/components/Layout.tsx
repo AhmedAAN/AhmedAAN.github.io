@@ -1,8 +1,9 @@
 import Footer from "./Footer";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 
 const Layout = () => {
+	const location = useLocation();
 	if (
 		!location.pathname.startsWith("/chats") &&
 		!location.pathname.startsWith("/meeting")

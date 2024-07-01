@@ -1,58 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import MentorCounter from '@/components/MentorCounter';
-import MentorProfileTop from '@/components/MentorProfileTop';
-import MentorSection from '@/components/MentorSection';
+import React, { useState, useEffect } from "react";
+import MentorProfileTop from "@/components/MentorProfileTop";
+import MentorSection from "@/components/MentorSection";
 
-interface MentorData {
-    userName: string;
-    specialization: string;
-    imageUrl: string;
-}
+const MentorProfile: React.FC = () => {
+	const [mentor, setMentor] = useState<any>([]);
+	const [loading, setLoading] = useState<boolean>(true);
 
-interface MentorProfileProps {
-    _id: string;
-}
+	useEffect(() => {
+		const user = JSON.parse(localStorage.getItem("user")!);
 
-const MentorProfile: React.FC<MentorProfileProps> = ({ _id }) => {
-    const [mentor, setMentor] = useState<MentorData>([]);
+		if (user) {
+			fetch(`https://radwan.up.railway.app/listMentor/${user._id}`)
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error("Network response was not ok");
+					}
+					return response.json();
+				})
+				.then((data) => {
+					setMentor({
+						userName: data.mentor.userName,
+						specialization: data.mentor.specialization,
+						imageUrl: data.mentor.imageUrl,
+					});
+					setLoading(false);
+				})
+				.catch((error) => {
+					console.error("Error fetching mentor data:", error);
+					setLoading(false);
+				});
+		} else {
+			setLoading(false);
+		}
+	}, []);
 
-    useEffect(() => {
-        fetch(`https://radwan.up.railway.app/listMentor/${_id}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setMentor({
-                    userName: data.mentor.userName,
-                    specialization: data.mentor.specialization,
-                    imageUrl: data.mentor.imageUrl
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching mentor data:', error);
-            });
-    }, [_id]);
-
-    return (
-        <section className="py-12 px-4 md:px-12">
-            {mentor ? (
-                <>
-                    <MentorProfileTop
-                        userName={mentor.userName}
-                        professionalTitle={mentor.specialization}
-                        imageUrl={mentor.imageUrl}
-                    />
-                    <MentorCounter />
-                    <MentorSection />
-                </>
-            ) : (
-                <p>Loading...</p>
-            )}
-        </section>
-    );
-}
+	return (
+		<section className="py-12 px-4 md:px-12">
+			{loading ? (
+				<p>Loading...</p>
+			) : mentor ? (
+				<>
+					<MentorProfileTop
+						userName={mentor.userName}
+						professionalTitle={mentor.specialization}
+						imageUrl={mentor.imageUrl}
+					/>
+					<MentorSection />
+				</>
+			) : (
+				<p>No mentor data available.</p>
+			)}
+		</section>
+	);
+};
 
 export default MentorProfile;

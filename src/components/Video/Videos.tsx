@@ -27,12 +27,6 @@ const Videos = ({
 		} else {
 			if (document.exitFullscreen) {
 				document.exitFullscreen();
-			} else if (document.mozCancelFullScreen) {
-				document.mozCancelFullScreen();
-			} else if (document.webkitExitFullscreen) {
-				document.webkitExitFullscreen();
-			} else if (document.msExitFullscreen) {
-				document.msExitFullscreen();
 			}
 			setFullScreen(false);
 		}
@@ -47,6 +41,7 @@ const Videos = ({
 						ref={localVideoComponent}
 						autoPlay
 						muted
+						playsInline
 						className="w-full h-full object-cover"></video>
 					<div className="absolute bottom-0 right-0 mb-2 mr-2 bg-primary px-2 py-1 rounded-lg text-xs">
 						You
@@ -80,6 +75,7 @@ const Videos = ({
 					<video
 						ref={remoteVideoComponent}
 						autoPlay
+						playsInline
 						className="w-full h-full object-cover"></video>
 					<div className="absolute bottom-0 right-0 mb-2 mr-2 bg-white px-2 py-1 rounded-lg text-xs">
 						Him
