@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Treadmill Interface</title>
+		<link rel="stylesheet" href="styles.css" />
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	</head>
+	<body>
+		<div class="treadmill-interface">
+			<div class="screen-top">
+				<div id="time-container" class="item-container">
+					<div id="time"></div>
+					<label>TIME</label>
+				</div>
+				<div id="floors-container" class="item-container">
+					<div id="floors"></div>
+					<label>FLOORS</label>
+				</div>
+				<div id="calories-container" class="item-container">
+					<div id="calories"></div>
+					<label>CALORIES</label>
+				</div>
+				<div id="heart-rate-container" class="item-container">
+					<div id="heart-rate"></div>
+					<label>HEART RATE</label>
+				</div>
+			</div>
+
+			<div class="screen-bottom">
+				<div class="screen-level item-container">
+					<div id="resistance-level"></div>
+					<label>LEVEL</label>
+				</div>
+				<div class="screen-resistance"></div>
+				<div class="screen-spm item-container">
+					<div id="spm"></div>
+					<label>SPM</label>
+				</div>
+			</div>
+
+			<div class="buttons">
+				<button id="start">START</button>
+				<button id="pause">PAUSE</button>
+				<button id="reset">RESET</button>
+			</div>
+		</div>
+
+		<script src="script.js"></script>
+		<script src="screen.js"></script>
+	</body>
+</html>

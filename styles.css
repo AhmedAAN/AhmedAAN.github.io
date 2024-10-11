@@ -1,0 +1,374 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: black;;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.treadmill-interface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    height: 80%;
+    gap: 80px;
+    background-color: #111;
+    border: 5px solid #555;
+    border-radius: 15px;
+    padding: 50px;
+    position: relative;
+}
+
+
+.buttons {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+button {
+    background-color: orangered;
+    border-radius: 7px;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #f39c12;
+}
+
+.screen-top {
+    display: flex;
+    width: fit-content;
+    gap: 25px;
+    background-color: black;
+    border: 4px solid #555;
+    border-radius: 15px;
+    padding: 5px;
+}
+.item-container {
+    position: relative;
+}
+.item-container > div {
+    display: flex;
+    position: relative;
+}
+.item-container > label {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 12px;
+    white-space: nowrap;
+    font-size: x-small;
+    font-weight: 700;
+    color: white;
+}
+.digit {
+    width: fit-content;
+    height: fit-content;
+    padding: 2px;
+    align-items: center;
+}
+.digit div {
+    text-align: left;
+    position: relative;
+    width: 28px;
+    height: 50px;
+    display: inline-block;
+    margin: 0 4px;
+    
+}
+
+.digit div span {
+    position: absolute;
+
+    background-color: #0b0d11;
+    border-color: #0b0d11;
+
+    -webkit-transition: 0.25s;
+    -moz-transition: 0.25s;
+    transition: 0.25s;
+}
+
+.digit div span:before,
+.digit div span:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+}
+
+/* Section 1 */
+.digit .d1 {
+    height: 5px;
+    width: 16px;
+    top: 0;
+    left: 6px;
+}
+.digit .d1:before {
+    border-width: 0 5px 5px 0;
+    border-right-color: inherit;
+    left: -5px;
+}
+.digit .d1:after {
+    border-width: 0 0 5px 5px;
+    border-left-color: inherit;
+    right: -5px;
+}
+
+/* Section 2 */
+.digit .d2 {
+    height: 5px;
+    width: 16px;
+    top: 24px;
+    left: 6px;
+}
+.digit .d2:before {
+    border-width: 3px 4px 2px;
+    border-right-color: inherit;
+    left: -8px;
+}
+.digit .d2:after {
+    border-width: 3px 4px 2px;
+    border-left-color: inherit;
+    right: -8px;
+}
+
+/* Section 3 */
+.digit .d3 {
+    height: 5px;
+    width: 16px;
+    top: 48px;
+    left: 6px;
+}
+.digit .d3:before {
+    border-width: 5px 5px 0 0;
+    border-right-color: inherit;
+    left: -5px;
+}
+.digit .d3:after {
+    border-width: 5px 0 0 5px;
+    border-left-color: inherit;
+    right: -5px;
+}
+
+/* Section 4 */
+.digit .d4 {
+    width: 5px;
+    height: 14px;
+    top: 7px;
+    left: 0;
+}
+.digit .d4:before {
+    border-width: 0 5px 5px 0;
+    border-bottom-color: inherit;
+    top: -5px;
+}
+.digit .d4:after {
+    border-width: 0 0 5px 5px;
+    border-left-color: inherit;
+    bottom: -5px;
+}
+
+/* Section 5 */
+.digit .d5 {
+    width: 5px;
+    height: 14px;
+    top: 7px;
+    right: 0;
+}
+.digit .d5:before {
+    border-width: 0 0 5px 5px;
+    border-bottom-color: inherit;
+    top: -5px;
+}
+.digit .d5:after {
+    border-width: 5px 0 0 5px;
+    border-top-color: inherit;
+    bottom: -5px;
+}
+
+/* Section 6 */
+.digit .d6 {
+    width: 5px;
+    height: 14px;
+    top: 32px;
+    left: 0;
+}
+.digit .d6:before {
+    border-width: 0 5px 5px 0;
+    border-bottom-color: inherit;
+    top: -5px;
+}
+.digit .d6:after {
+    border-width: 0 0 5px 5px;
+    border-left-color: inherit;
+    bottom: -5px;
+}
+
+/* Section 7 */
+.digit .d7 {
+    width: 5px;
+    height: 14px;
+    top: 32px;
+    right: 0;
+}
+.digit .d7:before {
+    border-width: 0 0 5px 5px;
+    border-bottom-color: inherit;
+    top: -5px;
+}
+.digit .d7:after {
+    border-width: 5px 0 0 5px;
+    border-top-color: inherit;
+    bottom: -5px;
+}
+
+
+/* Numbers */
+.digit div.n1 :is(.d5, .d7),
+.digit div.n2 :is(.d1, .d2, .d3, .d5, .d6),
+.digit div.n3 :is(.d1, .d2, .d3, .d5, .d7),
+.digit div.n4 :is(.d2, .d4, .d5, .d7),
+.digit div.n5 :is(.d1, .d2, .d3, .d4, .d7),
+.digit div.n6 :is(.d1, .d2, .d3, .d4, .d6, .d7),
+.digit div.n7 :is(.d1, .d5, .d7),
+.digit div.n8 :is(.d1, .d2, .d3, .d4, .d5, .d6, .d7),
+.digit div.n9 :is(.d1, .d2, .d3, .d4, .d5, .d7),
+:not(:first-child)>.digit div.n0 :is(.d1, .d3, .d4, .d5, .d6, .d7) {
+    background-color: orangered;
+    border-color: orangered;
+}
+
+#time div.dots {
+    width: 0px;
+    position: relative;
+}
+
+#time div.dots:before,
+#time div.dots:after {
+    background-color: #0b0d11;
+    width: 5px;
+    height: 5px;
+    content: '';
+    position: absolute;
+    left: 0;
+    transform: translateX(-2px);
+    top: 20px;
+}
+
+#time div.dots:after {
+    top: 40px;
+}
+
+#time div.dots.active:before,
+#time div.dots.active:after {
+    background-color: orangered;
+}
+
+#time div.dots.active:before,
+#time div.dots.active:after {
+    animation: blinker 1.2s infinite;
+}
+
+#floors div.dots {
+    width: 0px;
+    position: relative;
+}
+
+#floors div.dots:after {
+    background-color: #0b0d11;
+    width: 5px;
+    height: 5px;
+    content: '';
+    position: absolute;
+    left: 0;
+    transform: translateX(-2px);
+    bottom: 7px;
+}
+
+
+#floors div.dots.active:after {
+    background-color: orangered;
+}
+
+.screen-bottom {
+    display: flex;
+    gap: 55px;
+}
+
+.screen-resistance,
+.screen-level,
+.screen-spm {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    background-color: black;
+    border: 4px solid #555;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+
+.level {
+    width: fit-content;
+    height: fit-content;
+    padding: 4px;
+    align-items: center;
+}
+
+.level div {
+    display: inline-block;
+    gap: 8px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.level div span {
+    background-color: #0b0d11;
+    border-radius: 50px;
+
+    width: 14px;
+    height: 14px;
+
+    -webkit-transition: 0.25s;
+    -moz-transition: 0.25s;
+    transition: 0.25s;
+}
+
+/* Levels */
+.level div.l1 .d1,
+.level div.l2 :is(.d1, .d2),
+.level div.l3 :is(.d1, .d2, .d3),
+.level div.l4 :is(.d1, .d2, .d3, .d4),
+.level div.l5 :is(.d1, .d2, .d3, .d4, .d5),
+.level div.l6 :is(.d1, .d2, .d3, .d4, .d5, .d6),
+.level div.l7 :is(.d1, .d2, .d3, .d4, .d5, .d6, .d7),
+.level div.l8 :is(.d1, .d2, .d3, .d4, .d5, .d6, .d7, .d8),
+.level div.l9 :is(.d1, .d2, .d3, .d4, .d5, .d6, .d7, .d8, .d9) {
+    background-color: orangered;
+    border-color: orangered;
+}
+
+
+
+
+div.c1 .level span {
+    animation: blinker 1.7s infinite;
+}
+
+@keyframes blinker {
+    50% {
+        background-color: #0b0d11;
+    }
+}
