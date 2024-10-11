@@ -10,7 +10,7 @@ $(document).ready(function () {
 	const caloriesPerStep = 0.05;
 	const fatigueFactor = 0.005;
 	const heartRateIncrease = 1 / 60;
-	const baseHeartRate = 80;
+	const baseHeartRate = 110;
 
 	let totalCalories = 0;
 	let totalFloors = 0;
